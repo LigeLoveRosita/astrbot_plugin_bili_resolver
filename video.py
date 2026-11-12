@@ -20,6 +20,7 @@ from aiohttp import ClientTimeout
 from .analysis_bilibili import BILI_UA, logger
 
 QUALITY_QN = {
+    "自动": 127,
     "360P": 16,
     "480P": 32,
     "720P": 64,
@@ -37,9 +38,11 @@ QUALITY_LABEL = {
     112: "1080P+",
     116: "1080P60",
     120: "4K",
+    125: "HDR",
+    127: "8K",
 }
 # 这些清晰度只能走 DASH
-DASH_ONLY = {"1080P+", "4K"}
+DASH_ONLY = {"自动", "1080P+", "4K"}
 
 _DOWNLOAD_TIMEOUT = ClientTimeout(total=None, connect=20, sock_read=120)
 _PROBE_TIMEOUT = ClientTimeout(total=25)
@@ -366,8 +369,27 @@ async def prepare(
     """取流 + 下载（+ 合轨）。
 
     4K 需要 ffmpeg；找不到时抛 FFmpegMissing，由调用方决定是否降级。
+    quality="自动" 时：先按账号权限试最高 DASH，再和 1080P 的 durl 比，
+    取实际清晰度更高的那条（游客账号通常 durl 720P 反而比 DASH 高）。
     """
-    play = await fetch_play_url(session, bvid, cid, quality, cookie)
+    if quality == "自动":
+        play = None
+        try:
+            play = await fetch_play_url(session, bvid, cid, "1080P", cookie)
+        except Exception as exc:
+            logger.debug(f"自动清晰度：durl 取流失败 {exc!r}")
+        try:
+            dash = await fetch_play_url(session, bvid, cid, "自动", cookie)
+            if play is None or int(dash.get("quality") or 0) > int(
+                play.get("quality") or 0
+            ):
+                play = dash
+        except Exception as exc:
+            logger.debug(f"自动清晰度：dash 取流失败 {exc!r}")
+        if play is None:
+            raise RuntimeError("取流失败：这个视频没有可用的播放地址")
+    else:
+        play = await fetch_play_url(session, bvid, cid, quality, cookie)
     await probe_total(session, play, cookie, bvid)
     # max_bytes <= 0 表示不限制体积
     if max_bytes and play.get("size") and int(play["size"]) > max_bytes:

@@ -57,9 +57,9 @@
   "video_quality": {
     "description": "视频清晰度",
     "type": "string",
-    "options": ["360P", "480P", "720P", "1080P", "1080P+", "4K"],
-    "default": "480P",
-    "hint": "4K / 1080P+ 只能走 DASH 分离流，需要 ffmpeg 合轨；且 4K 需要登录大会员账号，否则 B 站只给 1080P（会自动降级）。"
+    "options": ["自动", "360P", "480P", "720P", "1080P", "1080P+", "4K"],
+    "default": "自动",
+    "hint": "自动 = 用当前登录账号能拿到的最高清晰度（大会员可到 4K，未登录通常 720P），并在 DASH 与 1080P 直链之间取实际更高的那条。\n4K / 1080P+ 只能走 DASH 分离流，需要 ffmpeg 合轨；没装 ffmpeg 会自动降级到 1080P。"
   },
   "video_max_mb": {
     "description": "视频体积上限（MB，0 = 不限制）",

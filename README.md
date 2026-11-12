@@ -15,10 +15,6 @@ _✨ bilibili小组件等转链的工具 ✨_
 
 AstrBot 插件 —— 自动解析群聊/私聊中的 B 站链接，返回视频信息摘要。
 
-> **本仓库是魔改版（v1.3.3）**，基于 [chufeng/astrbot_plugin_bili_resolver](https://github.com/chufeng/astrbot_plugin_bili_resolver)（GPLv3）修改。
-> 相对上游新增：图片卡片排版、热门评论区与 `/评论`、扫码登录与登录态持久化、视频下载与 4K（DASH + ffmpeg 合轨）、`/下视频` 指令。
-> 按 GPLv3 要求，本仓库同样以 GPLv3 发布，见 [LICENSE](LICENSE)。
-
 > 本插件主要是为了避免转链容易被 QQ 踢下线的情况，本人从插件发布到现在还未被踢下线。
 
 ## 效果示例

@@ -244,7 +244,7 @@ def _format_msg(msg_list: List[Union[List[str], str]]) -> list:
     "bilibili小组件等转链的工具,方便PC查看链接,"
     "因为之前用其他的转链总是被踢下线,所以自己写了个简单版的,"
     "从发布以来还没被踢下线",
-    "1.3.3",
+    "1.4.0",
     "https://github.com/chufeng/astrbot_plugin_bili_resolver",
 )
 class BilibiliAnalysis(Star):
@@ -795,6 +795,9 @@ class BilibiliAnalysis(Star):
                     "目前只支持普通视频（番剧/专栏/动态暂不支持取流）。"
                 )
                 return
+
+            if not self.bili_cookie:
+                logger.info("B 站未登录，清晰度将以游客权限为准")
 
             info, _vurl, err = await video_info(url, session)
             if not info:
