@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# 登录态 / 本地数据（绝对不能提交）
+bili_login.json
+*.session
+*.log
+
+# 临时文件
+temp/
+tmp/
+*.mp4
+*.m4s
+*.png
+!logo.png
+
+# 编辑器 / 系统
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

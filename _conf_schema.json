@@ -1,0 +1,110 @@
+{
+  "enable_auto_parse": {
+    "description": "自动解析 B 站链接（关闭后不再自动识别聊天中的链接）",
+    "type": "bool",
+    "default": true
+  },
+  "enable_search": {
+    "description": "启用 /搜视频 指令",
+    "type": "bool",
+    "default": true
+  },
+  "enable_image": {
+    "description": "纯文字模式下显示封面图（图片卡片模式自带封面）",
+    "type": "bool",
+    "default": true
+  },
+  "enable_card_image": {
+    "description": "图片卡片模式（把视频数据 + 热门评论排版成一张图）",
+    "type": "bool",
+    "default": true,
+    "hint": "开启后，视频链接会回复一张本地渲染的卡片：封面、标题、UP主、数据、简介、热门评论、链接。\n生成失败（或未安装 Pillow）时会自动回退为纯文字，不会丢消息。"
+  },
+  "enable_comments": {
+    "description": "显示热门评论（自动解析附带 + /评论 指令）",
+    "type": "bool",
+    "default": true
+  },
+  "comment_count": {
+    "description": "自动解析时附带的评论条数",
+    "type": "int",
+    "default": 3,
+    "hint": "0 表示自动解析时不附带评论（仍可用 /评论 指令单独查看）。建议 2~5 条，卡片会自动加高。"
+  },
+  "comment_cmd_count": {
+    "description": "/评论 指令展示的评论条数",
+    "type": "int",
+    "default": 5,
+    "hint": "最大 20 条，条数越多图片越长。"
+  },
+  "comment_sort": {
+    "description": "评论排序方式",
+    "type": "string",
+    "options": ["热门", "最新"],
+    "default": "热门"
+  },
+  "enable_video_download": {
+    "description": "允许提取视频文件（/下视频 指令）",
+    "type": "bool",
+    "default": true
+  },
+  "video_auto_send": {
+    "description": "解析链接时自动附带视频文件",
+    "type": "bool",
+    "default": false,
+    "hint": "开启后，每次解析视频链接会额外发送一次视频文件（仅在下方时长/体积限制内）；失败或超限时静默跳过。"
+  },
+  "video_quality": {
+    "description": "视频清晰度",
+    "type": "string",
+    "options": ["360P", "480P", "720P", "1080P", "1080P+", "4K"],
+    "default": "480P",
+    "hint": "4K / 1080P+ 只能走 DASH 分离流，需要 ffmpeg 合轨；且 4K 需要登录大会员账号，否则 B 站只给 1080P（会自动降级）。"
+  },
+  "video_max_mb": {
+    "description": "视频体积上限（MB，0 = 不限制）",
+    "type": "int",
+    "default": 20,
+    "hint": "填 0 表示不限制体积。注意 4K 视频很大（实测 42 秒约 120MB），不限制时请留意磁盘和上传耗时；临时文件 1 小时后自动清理。"
+  },
+  "video_max_duration": {
+    "description": "视频时长上限（秒）",
+    "type": "int",
+    "default": 300
+  },
+  "bili_cookie": {
+    "description": "B 站 Cookie（可选，优先级高于扫码登录）",
+    "type": "string",
+    "default": "",
+    "hint": "一般不用填：在群里发 /b站登录 扫码即可，登录态会自动保存并复用。\n这里手填只用于临时覆盖，例如 SESSDATA=xxxx。"
+  },
+  "ffmpeg_path": {
+    "description": "ffmpeg 路径（可选）",
+    "type": "string",
+    "default": "",
+    "hint": "4K / 1080P+ 需要 ffmpeg 合轨。留空会自动在 PATH、winget 安装目录里查找；也可以填绝对路径，如 C:\\ffmpeg\\bin\\ffmpeg.exe"
+  },
+  "group_whitelist_mode": {
+    "description": "群组白名单模式（开启后仅列表中的群生效，关闭则为黑名单模式——列表中的群不生效）",
+    "type": "bool",
+    "default": false
+  },
+  "group_list": {
+    "description": "群组 ID 列表（配合上方模式使用，填写群号，每行一个）",
+    "type": "list",
+    "default": []
+  },
+  "template_preset": {
+    "description": "纯文字回退时的排版风格（图片卡片模式下不生效）",
+    "type": "string",
+    "options": ["原始格式", "简洁风格", "自定义"],
+    "default": "原始格式",
+    "hint": "原始格式：插件内置纯文字格式（默认）\n简洁风格：带 Emoji 的卡片格式\n自定义：使用下方文本框中的模板\n各风格具体样式请查阅 README"
+  },
+  "video_template": {
+    "description": "自定义排版模板",
+    "type": "text",
+    "default": "",
+    "hint": "⚠️ 仅在上方排版风格选择「自定义」时生效，其他选项下此处内容不起作用。\n\n支持变量：\n${标题} ${UP主} ${UP主链接} ${简介} ${封面}\n${点赞} ${投币} ${收藏} ${转发} ${观看}\n${弹幕数量} ${评论} ${链接} ${发布时间}\n${类型} ${BV号} ${时长} ${版权}"
+  }
+}
