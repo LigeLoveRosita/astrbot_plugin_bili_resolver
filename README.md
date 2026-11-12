@@ -121,7 +121,7 @@ https://www.bilibili.com/video/av114556558967080?p=1
 | `comment_sort` | string | `热门` | 评论排序：热门 / 最新 |
 | `enable_video_download` | bool | `true` | 允许 `/下视频` 提取视频文件 |
 | `video_auto_send` | bool | `false` | 解析链接时自动附带视频文件 |
-| `video_quality` | string | `480P` | 取流清晰度：360P / 480P / 720P / 1080P / 1080P+ / 4K |
+| `video_quality` | string | `自动` | 取流清晰度：自动 / 360P / 480P / 720P / 1080P / 1080P+ / 4K |
 | `video_max_mb` | int | `0` | 视频体积上限（MB），**0 = 不限制** |
 | `video_max_duration` | int | `300` | 视频时长上限（秒） |
 | `bili_cookie` | string | `` | 可选，临时覆盖登录态（优先级高于扫码登录） |
